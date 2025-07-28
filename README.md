@@ -41,7 +41,7 @@ TF_VAR_CLOUDFLARE_ZONE_ID_CLOUDGUARD_ROCKS=xxx
 
 ## Lab usage
 
-Check `Makefile` and actions like `make apply` and `make destroy`.
+Check `Makefile` and actions like `make up` and `make down`.
 
 ## Links
 

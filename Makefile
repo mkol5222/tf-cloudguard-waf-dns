@@ -12,4 +12,8 @@ state:
 destroy:
 	dotenvx run -- terraform destroy -auto-approve
 
+up: apply
+down: destroy
+
+
 
