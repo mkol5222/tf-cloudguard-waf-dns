@@ -18,4 +18,17 @@ variable "WAFSECRET" {
   sensitive   = true
 }
 
+# cert validation_cnames
+output "dns_cert_validation_cnames" {
+  description = "list of validation CNAMEs for WAF asset domains"
+  value       = module.waf-dns.dns_cert_validation_cnames
+}
+
+
+# dns_service_domains
+output "dns_service_domains" {
+  description = "List of service domains for WAF assets"
+  value       = module.waf-dns.dns_service_domains
+}
+
 
