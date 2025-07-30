@@ -1,11 +1,36 @@
 # CloudGuard WAFaaS DNS records management using Terraform
 
+## Usage
+
+```hcl
+# API key for Cloudguard WAF tenant
+variable "WAFKEY" {}
+variable "WAFSECRET" {}
+
+# use module to retrieve definitions of certificate validation CNAMES and service hostnames
+#  (or A records for root domains)
+module "wafdns" {
+    source = "git::https://github.com/mkol5222/tf-cloudguard-waf-dns.git//cloudguard-waf-dns?ref=v1.0.0"
+    WAFKEY  = var.WAFKEY
+    WAFSECRET = var.WAFSECRET
+}
+
+# this can be used by your DNS provider terraform provider or for script that manages DNS records
+output "dns_cert_validation_cnames" {
+  value = module.wafdns.dns_cert_validation_cnames
+}
+output "dns_service_domains" {
+  value = module.wafdns.dns_service_domains
+}
+```
+
 ## Modules
 
 ### Terraform module cloudguard-waf-dns
 
 Module that visits all WAFaaS Profiles in WAF tenant defined by API key in variables `WAFKEY` and `WAFSECRET`
-and returns certificate validation CNAMES `dns_cert_validation_cnames` and service hostnames `dns_service_domains` that can be used with custom Terraform code for DNS management.
+and returns certificate validation CNAMES `dns_cert_validation_cnames` and service hostnames `dns_service_domains` 
+that can be used with custom Terraform code for DNS management.
 (A records are used for root domains - domains without www. prefix)
 
 Examples: [main.tf](./main.tf)
@@ -21,7 +46,7 @@ together with CloudFlare DNS `CLOUDFLARE_ZONE_ID` and `CLOUDFLARE_API_TOKEN`.
 Examples: [cloudguard.rocks.tf](./cloudguard.rocks.tf), [klaud.online.tf](./klaud.online.tf)
 
 
-### Terraform inpts
+### Terraform inputs
 
 This can be provided by `.env` file or by environment variables.
 
